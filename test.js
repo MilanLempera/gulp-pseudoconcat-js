@@ -10,21 +10,32 @@ var assert = require('assert'),
 
 
 describe('gulp-pseudoconcat-js', function() {
+  var onDataCalled;
+
+  beforeEach(function(done) {
+    onDataCalled = false;
+    done();
+  });
+
   it('should transform files to <script>', function(done) {
     var stream = pseudoconcat('file.js');
     var fakeFile = new gutil.File({
-      path: 'file1-path.js'
+      path: 'file1-path.js',
+      contents: new Buffer('file1-content')
     });
 
     var fakeFile2 = new gutil.File({
-      path: 'file2-path.js'
+      path: 'file2-path.js',
+      contents: new Buffer('file2-content')
     });
 
     stream.on('data', function(newFile) {
-      assert.equal('document.write(\'<script src="file1-path.js"></script><script src="file2-path.js"></script>\');', newFile.contents);
+      onDataCalled = true;
+      assert.equal('document.write(\'<script src="file1-path.js"></script><script src="file2-path.js"></script>\');', newFile.contents.toString());
     });
 
     stream.on('end', function() {
+      assert.ok(onDataCalled, 'on data was called');
       done();
     });
 
@@ -32,6 +43,49 @@ describe('gulp-pseudoconcat-js', function() {
     stream.write(fakeFile2);
     stream.end();
   });
+
+  it('should preserve full path without options.webRoot', function(done) {
+    var stream = pseudoconcat('file.js');
+    var fakeFile = new gutil.File({
+      path: 'project/src/frontend/first.js',
+      contents: new Buffer('file1-content')
+    });
+
+    stream.on('data', function(newFile) {
+      onDataCalled = true;
+      assert.equal('document.write(\'<script src="project/src/frontend/first.js"></script>\');', newFile.contents.toString());
+    });
+
+    stream.on('end', function() {
+      assert.ok(onDataCalled, 'on data was called');
+      done();
+    });
+
+    stream.write(fakeFile);
+    stream.end();
+  });
+
+  it('should derive path from webRoot', function(done) {
+    var stream = pseudoconcat('file.js', {webRoot: 'project/src'});
+    var fakeFile = new gutil.File({
+      path: 'project/src/frontend/first.js',
+      contents: new Buffer('file1-content')
+    });
+
+    stream.on('data', function(newFile) {
+      onDataCalled = true;
+      assert.equal('document.write(\'<script src="frontend/first.js"></script>\');', newFile.contents.toString());
+    });
+
+    stream.on('end', function() {
+      assert.ok(onDataCalled, 'on data was called');
+      done();
+    });
+
+    stream.write(fakeFile);
+    stream.end();
+  });
+
 
   it('should not work in stream mode', function(done) {
     var stream = pseudoconcat('file.js');

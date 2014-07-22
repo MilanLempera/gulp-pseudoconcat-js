@@ -1,7 +1,7 @@
 {
   "name": "gulp-pseudoconcat-js",
   "version": "0.1.0",
-  "description": "Concatenates javascript files into <script> includes",
+  "description": "Transform javascript files into <script> includes",
   "author": "Milan Lempera <milanlempera@gmail.com",
   "main": "./index.js",
   "keywords": [
