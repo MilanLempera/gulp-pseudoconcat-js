@@ -9,7 +9,7 @@ module.exports = function(fileName, opt, remoteFiles) {
   remoteFiles = remoteFiles || [];
 
   if (!fileName)
-    throw new PluginError('gulp-dev-concat', 'Missing fileName option for gulp-concat');
+    throw new PluginError('gulp-pseudoconcat-js', 'Missing fileName option for gulp-pseudoconcat-js');
 
   if (!opt)
     opt = {};
@@ -29,7 +29,7 @@ module.exports = function(fileName, opt, remoteFiles) {
     }
 
     if (file.isStream()) {
-      return this.emit('error', new PluginError('gulp-dev-concat', 'Streaming not supported'));
+      return this.emit('error', new PluginError('gulp-pseudoconcat-js', 'Streaming not supported'));
     }
 
     if (!firstFile)
