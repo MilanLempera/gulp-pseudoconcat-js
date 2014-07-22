@@ -7,9 +7,15 @@
   "keywords": [
     "gulpplugin"
   ],
+  "scripts": {
+    "test": "mocha"
+  },
   "dependencies": {
     "gulp-util": "^2.2.5",
     "through": "^2.3.4"
+  },
+  "devDependencies": {
+    "mocha": "~1.16.2"
   },
   "license": "MIT"
 }
