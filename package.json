@@ -1,6 +1,6 @@
 {
   "name": "gulp-pseudoconcat-js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Transform javascript files into <script> includes",
   "homepage": "https://github.com/MilanLempera/gulp-pseudoconcat-js",
   "repository": "git@github.com:MilanLempera/gulp-pseudoconcat-js.git",
