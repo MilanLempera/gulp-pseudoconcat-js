@@ -7,7 +7,7 @@
   "author": "Milan Lempera <milanlempera@gmail.com>",
   "main": "./index.js",
   "keywords": [
-    "gulpplugin"
+    "gulp", "gulpplugin", "gulp-plugin", "concat", "development", "include", "javascript"
   ],
   "scripts": {
     "test": "mocha"
