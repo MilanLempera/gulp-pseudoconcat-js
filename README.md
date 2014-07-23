@@ -8,7 +8,7 @@
 </tr>
 <tr>
 <td>Description</td>
-<td>Transform javascript files into &lt;script&gt; includes</td>
+<td>Transforms list of javascript files into &lt;script&gt; includes</td>
 </tr>
 <tr>
 <td>Node Version</td>
@@ -16,11 +16,9 @@
 </tr>
 </table>
 
-gulp-pseudoconcat-js is substitute for [gulp-concat][1] for development. With this plugin browser use js files directly from src folder without any copying to build directory, source maps,... 
+gulp-pseudoconcat-js is substitute to [gulp-concat][1] for development. This plugin allows browser to use js files directly from src folder without copying to build directory. Because of that Gulp-pseudoconcat-js allows you to debug your javascripts in your IDE as usual.
 
-Gulp-pseudoconcat-js lets you simply debug your javascripts in your IDE.
-
-Order of the files in ouptut script is same as order of the input. So you can use the plugin with [gulp-angular-filesort][2] and similar sorting plugins.
+Order of the files is not influenced, ouptut order is same as input order. So you can still use the plugin with [gulp-angular-filesort][2] and similar sorting plugins.
 
 ## Install
 
@@ -63,8 +61,8 @@ document.write('<script src="src/file1.js"></script><script src="src/file2.js"><
 
 `webRoot` (string), default gulp working directory
 
- - directory from which the file path derived 
- - typically the directory that contains index.html
+ - file path is derived from this directory
+ - usually the directory that contains index.html
 
 ```
 without options.webRoot
@@ -74,8 +72,7 @@ options.webRoot = project/src/
     project/src/frontend/first.js => <script src="frontend/first.js">
 ```
 
-
-## Typicaly Usage
+## Typical Usage
 
 ```javascript
 var angularFilesort = require('gulp-angular-filesort');
