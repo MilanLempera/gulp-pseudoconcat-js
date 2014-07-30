@@ -5,7 +5,9 @@ var File = gutil.File;
 var path = require('path');
 var through = require('through');
 
-module.exports = function(fileName, opt, remoteFiles) {
+var URL_SEPARATOR = '/';
+
+module.exports = function(fileName, opt, remoteFiles) {  
   remoteFiles = remoteFiles || [];
 
   if (!fileName)
@@ -45,7 +47,11 @@ module.exports = function(fileName, opt, remoteFiles) {
       return '<script src="' + filePath + '"></script>';
     });
     var scripts = buffer.map(function(file) {
-      return '<script src="' + path.relative(opt.webRoot, file.path) + '"></script>';
+      var scriptPath = path.relative(opt.webRoot, file.path);
+      if (path.sep !== URL_SEPARATOR) {
+        scriptPath = scriptPath.split(path.sep).join(URL_SEPARATOR);
+      }
+      return '<script src="' + scriptPath + '"></script>';
     });
 
     var joinedContents = new Buffer('document.write(\'' + remoteScripts.join('') + scripts.join('') + '\');', 'utf-8');

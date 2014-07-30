@@ -6,8 +6,8 @@
 var assert = require('assert'),
   gutil = require('gulp-util'),
   PassThrough = require('stream').PassThrough,
+  path = require('path'),
   pseudoconcat = require('./index');
-
 
 describe('gulp-pseudoconcat-js', function() {
   var onDataCalled;
@@ -86,7 +86,6 @@ describe('gulp-pseudoconcat-js', function() {
     stream.end();
   });
 
-
   it('should not work in stream mode', function(done) {
     var stream = pseudoconcat('file.js');
     var fakeStream = new PassThrough();
@@ -106,4 +105,41 @@ describe('gulp-pseudoconcat-js', function() {
     stream.end();
     done();
   });
+
+  describe('on windows', function() {
+    var path_sep_original = path.sep;
+
+    before(function(done) {
+      path.sep = '\\';
+      done();
+    });
+
+    after(function(done) {
+      path.sep = path_sep_original;
+      done();
+    });
+
+    it('convert path to url', function(done) {
+      var stream = pseudoconcat('file.js');
+      var fakeFile = new gutil.File({
+        path: 'src\\frontend\\first.js',
+        contents: new Buffer('file1-content')
+      });
+
+      stream.on('data', function(newFile) {
+        onDataCalled = true;
+        assert.equal('document.write(\'<script src="src/frontend/first.js"></script>\');', newFile.contents.toString());
+      });
+
+      stream.on('end', function() {
+        assert.ok(onDataCalled, 'on data was called');
+        done();
+      });
+
+      stream.write(fakeFile);
+      stream.end();
+    });
+
+  });
+
 });
