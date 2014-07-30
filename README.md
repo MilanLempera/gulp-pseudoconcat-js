@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/MilanLempera/gulp-pseudoconcat-js.svg?branch=master)](https://travis-ci.org/MilanLempera/gulp-pseudoconcat-js)
+[![Dependency Status](https://david-dm.org/MilanLempera/gulp-pseudoconcat-js.png)](https://david-dm.org/MilanLempera/gulp-pseudoconcat-js) 
+[![devDependency Status](https://david-dm.org/MilanLempera/gulp-pseudoconcat-js/dev-status.png)](https://david-dm.org/MilanLempera/gulp-pseudoconcat-js#info=devDependencies)
 
 ## Information
 
